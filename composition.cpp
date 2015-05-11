@@ -1,7 +1,5 @@
-#include <iostream>
 #include <sstream>
 #include <cassert>
-#include <memory>
 
 #include "function_composition.hpp"
 
