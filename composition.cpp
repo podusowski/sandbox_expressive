@@ -2,8 +2,8 @@
 #include <cassert>
 #include <iostream>
 
-#include "function_composition.hpp"
-#include "curry.hpp"
+#include "functional/function_composition.hpp"
+#include "functional/curry.hpp"
 
 using namespace functional;
 
