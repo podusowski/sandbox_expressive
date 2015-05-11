@@ -5,6 +5,8 @@
 #include "function_composition.hpp"
 #include "curry.hpp"
 
+using namespace functional;
+
 template<int tag>
 struct strict_type
 {

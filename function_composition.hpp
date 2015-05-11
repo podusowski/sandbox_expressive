@@ -2,6 +2,9 @@
 
 #include "function_traits.hpp"
 
+namespace functional
+{
+
 template<class First, class Second>
 struct composition
 {
@@ -24,3 +27,5 @@ auto compose(First first, Second second) -> composition<First, Second>
 {
     return composition<First, Second>{first, second};
 }
+
+} // namespace functional

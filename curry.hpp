@@ -2,6 +2,9 @@
 
 #include "function_traits.hpp"
 
+namespace functional
+{
+
 template<class Callable, class Arg>
 struct curried_callable
 {
@@ -25,3 +28,5 @@ auto curry(Callable callable, Arg arg) -> curried_callable<Callable, Arg>
 {
     return curried_callable<Callable, Arg>{callable, arg};
 }
+
+} // namespace functional

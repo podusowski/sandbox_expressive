@@ -1,5 +1,8 @@
 #pragma once
 
+namespace functional
+{
+
 template<class Signature>
 struct function_traits : public function_traits<decltype(&Signature::operator())>
 {
@@ -25,3 +28,5 @@ struct function_traits<Result(*)(Arg, Rest...)>
     typedef Result return_type;
     typedef Arg arg_type;
 };
+
+} // namespace functional
