@@ -33,11 +33,6 @@ auto bar(strict_type<2> value) -> strict_type<3>
     return strict_type<3>{*value};
 }
 
-auto foobar(strict_type<1> first, strict_type<2> second) -> strict_type<3>
-{
-    return strict_type<3>{*first + *second};
-}
-
 auto sum(int a, int b) -> int
 {
     return a + b;
