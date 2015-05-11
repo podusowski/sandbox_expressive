@@ -2,7 +2,7 @@
 #include <cassert>
 #include <iostream>
 
-#include "functional/function_composition.hpp"
+#include "functional/composition.hpp"
 #include "functional/curry.hpp"
 
 using namespace functional;
