@@ -1,30 +1,6 @@
 #pragma once
 
-template<class Signature>
-struct function_traits : public function_traits<decltype(&Signature::operator())>
-{
-};
-
-template<class Result, class Class, class Arg>
-struct function_traits<Result(Class::*)(Arg) const>
-{
-    typedef Result return_type;
-    typedef Arg arg_type;
-};
-
-template<class Result, class Class, class Arg>
-struct function_traits<Result(Class::*)(Arg)>
-{
-    typedef Result return_type;
-    typedef Arg arg_type;
-};
-
-template<class Result, class Arg>
-struct function_traits<Result(*)(Arg)>
-{
-    typedef Result return_type;
-    typedef Arg arg_type;
-};
+#include "function_traits.hpp"
 
 template<class First, class Second>
 struct composition
@@ -45,6 +21,12 @@ private:
 
 template<class First, class Second>
 auto compose(First first, Second second) -> composition<First, Second>
+{
+    return composition<First, Second>{first, second};
+}
+
+template<class First, class Second>
+auto operator >> (First first, Second second) -> composition<First, Second>
 {
     return composition<First, Second>{first, second};
 }
