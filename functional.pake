@@ -1,0 +1,2 @@
+#configuration __default  compiler(g++)
+target application example sources(example.cpp) compiler_flags(-std=c++11) run_after("${__build}/example")
