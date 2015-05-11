@@ -1,4 +1,9 @@
-#include <type_traits>
+#include <iostream>
+#include <sstream>
+#include <cmath>
+#include <memory>
+
+#include "function_composition.hpp"
 
 struct type1 {};
 struct type2 {};
@@ -14,49 +19,27 @@ auto bar(type2) -> type3
     return type3{};
 }
 
-template<class Signature>
-struct function_traits : public function_traits<decltype(&Signature::operator())>
+auto derefence(std::shared_ptr<std::string> sp) -> std::string
 {
-};
+    return *sp;
+}
 
-template<class Result, class Class, class Arg>
-struct function_traits<Result(Class::*)(Arg) const>
+auto string_to_int(std::string s) -> int
 {
-    typedef Result return_type;
-    typedef Arg arg_type;
-};
-
-template<class Result, class Class, class Arg>
-struct function_traits<Result(Class::*)(Arg)>
-{
-    typedef Result return_type;
-    typedef Arg arg_type;
-};
-
-template<class Result, class Arg>
-struct function_traits<Result(*)(Arg)>
-{
-    typedef Result return_type;
-    typedef Arg arg_type;
-};
-
-template<class First, class Second>
-struct composition
-{
-    auto operator () (typename function_traits<First>::arg_type) -> typename function_traits<Second>::return_type
-    {
-        return typename function_traits<Second>::return_type{};
-    }
-};
-
-template<class First, class Second>
-auto compose(First, Second) -> composition<First, Second>
-{
-    return composition<First, Second>{};
+    std::stringstream ss(s);
+    int ret;
+    ss >> ret;
+    return ret;
 }
 
 int main()
 {
     auto composed = compose(&foo, &bar);
     type3 ret = composed(type1{});
+
+    {
+        auto c = compose(derefence, string_to_int);
+        int i = c(std::make_shared<std::string>("2"));
+        std::cout << i << std::endl;
+    }
 }

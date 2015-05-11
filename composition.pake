@@ -1,2 +1,2 @@
 #configuration __default  compiler(g++)
-target application composition sources(composition.cpp) compiler_flags(-std=c++11)
+target application composition sources(composition.cpp) compiler_flags(-std=c++11) run_after("${__build}/composition")
