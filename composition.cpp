@@ -29,11 +29,22 @@ auto bar(strict_type<2> value) -> strict_type<3>
     return strict_type<3>{*value};
 }
 
+auto foobar(strict_type<1> first, strict_type<2> second) -> strict_type<3>
+{
+    return strict_type<3>{*first + *second};
+}
+
 int main()
 {
     {
-        auto composed = compose(&foo, &bar);
+        auto composed = compose(foo, bar);
         strict_type<3> ret = composed(strict_type<1>{3});
         assert(3 == *ret);
+    }
+
+    {
+        //auto composed = curry(&foo, &bar);
+        //strict_type<3> ret = composed(strict_type<1>{3});
+        //assert(3 == *ret);
     }
 }
