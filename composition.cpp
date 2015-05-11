@@ -1,45 +1,39 @@
 #include <iostream>
 #include <sstream>
-#include <cmath>
+#include <cassert>
 #include <memory>
 
 #include "function_composition.hpp"
 
-struct type1 {};
-struct type2 {};
-struct type3 {};
-
-auto foo(type1) -> type2
+template<int tag>
+struct strict_type
 {
-    return type2{};
+    explicit strict_type(int value) : value(value)
+    {
+    }
+
+    auto operator * () const -> int
+    {
+        return value;
+    }
+
+private:
+    int value;
+};
+
+auto foo(strict_type<1> value) -> strict_type<2>
+{
+    return strict_type<2>{*value};
 }
 
-auto bar(type2) -> type3
+auto bar(strict_type<2> value) -> strict_type<3>
 {
-    return type3{};
-}
-
-auto derefence(std::shared_ptr<std::string> sp) -> std::string
-{
-    return *sp;
-}
-
-auto string_to_int(std::string s) -> int
-{
-    std::stringstream ss(s);
-    int ret;
-    ss >> ret;
-    return ret;
+    return strict_type<3>{*value};
 }
 
 int main()
 {
     auto composed = compose(&foo, &bar);
-    type3 ret = composed(type1{});
-
-    {
-        auto c = compose(derefence, string_to_int);
-        int i = c(std::make_shared<std::string>("2"));
-        std::cout << i << std::endl;
-    }
+    strict_type<3> ret = composed(strict_type<1>{3});
+    assert(3 == *ret);
 }

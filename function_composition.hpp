@@ -25,8 +25,9 @@ auto compose(First first, Second second) -> composition<First, Second>
     return composition<First, Second>{first, second};
 }
 
-template<class First, class Second>
-auto operator >> (First first, Second second) -> composition<First, Second>
-{
-    return composition<First, Second>{first, second};
-}
+//template<class First, class Second, class = typename function_traits<First>::return_type>
+//auto operator >> (First && first, Second && second) -> void //composition<First, Second>;
+//{
+//    return composition<First, Second>{std::forward<First>(first),
+//                                      std::forward<Second>(second)};
+//}
