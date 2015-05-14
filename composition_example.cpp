@@ -19,15 +19,15 @@ auto take_x(const my_struct & s) -> int
 
 void find_in_container()
 {
+    auto is_a = functional::compose(take_x,
+                                    functional::curry(std::equal_to<int>{}, 2));
+
     auto vec = std::vector<my_struct>{{1}, {2}};
 
-    auto equals_to_2 = functional::curry(std::equal_to<int>{}, 2);
-//    std::cout << std::boolalpha << std::equal_to<int>{}(2, 2) << " " << equals_to_2(2) << std::endl;
+    auto found = std::find_if(vec.begin(),
+                              vec.end(),
+                              is_a) != vec.end();
 
-
-    auto is_a = functional::compose(take_x, equals_to_2);
-    auto found = std::find_if(vec.begin(), vec.end(), is_a) != vec.end();
-//
     std::cout << std::boolalpha << "has: " << found << std::endl;
 }
 
