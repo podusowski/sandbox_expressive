@@ -17,17 +17,33 @@ auto take_x(const my_struct & s) -> int
     return s.x;
 }
 
-int main()
+void find_in_container()
 {
     auto vec = std::vector<my_struct>{{1}, {2}};
 
     auto equals_to_2 = functional::curry(std::equal_to<int>{}, 2);
-
-    //std::cout << std::boolalpha << equals_to_2(3) << std::endl;
+//    std::cout << std::boolalpha << std::equal_to<int>{}(2, 2) << " " << equals_to_2(2) << std::endl;
 
 
     auto is_a = functional::compose(take_x, equals_to_2);
-//    auto found = std::find_if(vec.begin(), vec.end(), is_a) != vec.end();
+    auto found = std::find_if(vec.begin(), vec.end(), is_a) != vec.end();
+//
+    std::cout << std::boolalpha << "has: " << found << std::endl;
+}
 
-//    std::cout << std::boolalpha << "has: " << found << std::endl;
+auto sum_of_4(int a, int b, int c, int d) -> int
+{
+    return a + b + c + d;
+}
+
+void multiarguments()
+{
+    auto sum_of_3args_and_1 = functional::curry(sum_of_4, 1);
+    std::cout << sum_of_3args_and_1(1, 2, 3) << std::endl;
+}
+
+int main()
+{
+    find_in_container();
+    multiarguments();
 }

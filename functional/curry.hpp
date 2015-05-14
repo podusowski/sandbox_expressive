@@ -2,31 +2,70 @@
 
 #include "function_traits.hpp"
 
+#include <type_traits>
+
 namespace functional
 {
 
-template<class Callable, class Arg>
-struct curried_callable
+template<class Callable, class Arg, class... Others>
+struct curried
 {
-    curried_callable(Callable callable, Arg arg) : callable(callable), arg(arg)
+    curried() = delete;
+
+    curried(Callable callable, Arg arg) : callable(callable), arg(arg)
     {
     }
 
-    template<class... Args>
-    auto operator () (Args... args) const -> typename function_traits<Callable>::return_type
+    auto operator () (Others... others) const -> typename function_traits<Callable>::return_type
     {
-        return callable(arg, args...);
+        return callable(arg, others...);
     }
 
 private:
-    Callable callable;
-    Arg arg;
+    typename std::remove_reference<Callable>::type callable;
+    typename std::remove_reference<Arg>::type arg;
 };
 
-template<class Callable, class Arg>
-auto curry(Callable callable, Arg arg) -> curried_callable<Callable, Arg>
+template<class Callable>
+struct curry_traits : public curry_traits<decltype(&Callable::operator())>
 {
-    return curried_callable<Callable, Arg>{callable, arg};
+};
+
+template<class Result, class Class, class Arg, class... Rest>
+struct curry_traits<Result(Class::*)(Arg, Rest...) const>
+{
+    template<class Callable>
+    struct curried_callable
+    {
+        using type = curried<Callable, Arg, Rest...>;
+    };
+};
+
+template<class Result, class Class, class Arg, class... Rest>
+struct curry_traits<Result(Class::*)(Arg, Rest...)>
+{
+    template<class Callable>
+    struct curried_callable
+    {
+        using type = curried<Callable, Arg, Rest...>;
+    };
+};
+
+template<class Result, class Arg, class... Rest>
+struct curry_traits<Result(*)(Arg, Rest...)>
+{
+    template<class Callable>
+    struct curried_callable
+    {
+        using type = curried<Callable, Arg, Rest...>;
+    };
+};
+
+
+template<class Callable, class Arg>
+auto curry(Callable callable, Arg arg)
+{
+    return typename curry_traits<Callable>::template curried_callable<Callable>::type{callable, arg};
 }
 
 } // namespace functional
