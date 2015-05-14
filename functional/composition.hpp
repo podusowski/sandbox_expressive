@@ -22,6 +22,9 @@ private:
     Second second;
 };
 
+/**
+ * calling the result will be equivalent to second(first(x))
+ */
 template<class First, class Second>
 auto compose(First first, Second second) -> composition<First, Second>
 {
