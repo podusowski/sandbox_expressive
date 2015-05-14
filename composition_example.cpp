@@ -6,27 +6,25 @@
 
 #include "functional/composition.hpp"
 #include "functional/curry.hpp"
+#include "functional/member.hpp"
 
 struct my_struct
 {
     int x;
 };
 
-auto take_x(const my_struct & s) -> int
-{
-    return s.x;
-}
-
 void find_in_container()
 {
-    auto is_a = functional::compose(take_x,
-                                    functional::curry(std::equal_to<int>{}, 2));
+    using namespace functional;
+
+    auto x_is_equal_to_2 = compose(member(&my_struct::x),
+                                   curry(std::equal_to<int>{}, 2));
 
     auto vec = std::vector<my_struct>{{1}, {2}};
 
     auto found = std::find_if(vec.begin(),
                               vec.end(),
-                              is_a) != vec.end();
+                              x_is_equal_to_2) != vec.end();
 
     std::cout << std::boolalpha << "has: " << found << std::endl;
 }
