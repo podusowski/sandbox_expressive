@@ -13,7 +13,7 @@ struct curried_callable
     }
 
     template<class... Args>
-    auto operator () (Args... args) -> typename function_traits<Callable>::return_type
+    auto operator () (Args... args) const -> typename function_traits<Callable>::return_type
     {
         return callable(arg, args...);
     }

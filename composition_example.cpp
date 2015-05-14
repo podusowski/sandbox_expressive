@@ -1,22 +1,33 @@
 #include <memory>
 #include <iostream>
+#include <vector>
+#include <algorithm>
+#include <functional>
 
 #include "functional/composition.hpp"
 #include "functional/curry.hpp"
 
-auto indirected(std::shared_ptr<int> x) -> int
+struct my_struct
 {
-    return *x;
-}
+    int x;
+};
 
-auto power_of_two(int x) -> int
+auto take_x(const my_struct & s) -> int
 {
-    return x * x;
+    return s.x;
 }
 
 int main()
 {
-    auto x = std::make_shared<int>(5);
-    auto pow = functional::compose(indirected, power_of_two);
-    std::cout << pow(x) << std::endl;
+    auto vec = std::vector<my_struct>{{1}, {2}};
+
+    auto equals_to_2 = functional::curry(std::equal_to<int>{}, 2);
+
+    //std::cout << std::boolalpha << equals_to_2(3) << std::endl;
+
+
+    auto is_a = functional::compose(take_x, equals_to_2);
+//    auto found = std::find_if(vec.begin(), vec.end(), is_a) != vec.end();
+
+//    std::cout << std::boolalpha << "has: " << found << std::endl;
 }
