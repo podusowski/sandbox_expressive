@@ -15,10 +15,18 @@ struct my_struct
 
 void find_in_container()
 {
+    auto ints_are_equal = std::equal_to<int>{};
+
     using namespace functional;
 
     auto x_is_equal_to_2 = compose(member(&my_struct::x),
-                                   curry(std::equal_to<int>{}, 2));
+                                   curry(ints_are_equal, 2));
+
+    using namespace std::placeholders;
+
+    auto x_is_equal_to_2_std = std::bind(ints_are_equal,
+                                         std::bind(&my_struct::x, _1),
+                                         2);
 
     auto vec = std::vector<my_struct>{{1}, {2}};
 
@@ -26,7 +34,11 @@ void find_in_container()
                               vec.end(),
                               x_is_equal_to_2) != vec.end();
 
-    std::cout << std::boolalpha << "has: " << found << std::endl;
+    auto found_std = std::find_if(vec.begin(),
+                                  vec.end(),
+                                  x_is_equal_to_2_std) != vec.end();
+
+    std::cout << std::boolalpha << "has: " << found << "/" << found_std << std::endl;
 }
 
 auto sum_of_4(int a, int b, int c, int d) -> int
