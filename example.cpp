@@ -1,11 +1,10 @@
 #include <sstream>
 #include <cassert>
 #include <iostream>
+#include <functional>
 
 #include "functional/composition.hpp"
 #include "functional/curry.hpp"
-
-using namespace functional;
 
 template<int tag>
 struct strict_type
@@ -33,34 +32,32 @@ auto bar(strict_type<2> value) -> strict_type<3>
     return strict_type<3>{*value};
 }
 
-auto sum(int a, int b) -> int
+// usage
+
+auto functional_way()
 {
-    return a + b;
+    using namespace functional;
+
+    auto foobar = compose(foo, bar);
+
+    /* to ensure return type */ strict_type<3> ret = foobar(strict_type<1>{3});
+
+    assert(3 == *ret);
 }
 
-auto print_sum(int a, int b) -> void
+auto std_bind_way()
 {
-    std::cout << a + b << std::endl;
+    using namespace std::placeholders;
+
+    auto foobar = std::bind(bar, std::bind(foo, _1));
+
+    /* to ensure return type */ strict_type<3> ret = foobar(strict_type<1>{3});
+
+    assert(3 == *ret);
 }
 
 int main()
 {
-    // function composition
-    {
-        auto composed = compose(foo, bar);
-        strict_type<3> ret = composed(strict_type<1>{3});
-        assert(3 == *ret);
-    }
-
-    // function currying
-    {
-        auto curried = curry(sum, 1);
-        auto ret = curried(3);
-        assert(4 == ret);
-    }
-
-    {
-        auto curried = curry(print_sum, 1);
-        curried(3);
-    }
+    functional_way();
+    std_bind_way();
 }
