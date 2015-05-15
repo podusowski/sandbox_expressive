@@ -4,11 +4,11 @@
 
 int main()
 {
-    unpure::watch<bool> watcher;
+    unpure::watch<bool> my_important_value;
 
-    watcher.when_changed_to(true, []{ std::cout << "enabled" << std::endl; });
-    watcher.when_changed_to(false, []{ std::cout << "disabled" << std::endl; });
+    my_important_value.when_changed([&] { std::cout << "changed to: " << std::boolalpha << *my_important_value << std::endl; });
 
-    watcher = true;
-    watcher = !(*watcher);
+    my_important_value = true;
+    my_important_value = true;
+    my_important_value = !(*my_important_value);
 }

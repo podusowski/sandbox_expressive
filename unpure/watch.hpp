@@ -21,12 +21,11 @@ struct watch
 
     auto operator = (Value value) -> void
     {
-        this->value = value;
+        std::swap(this->value, value);
 
-        auto it = actions.find(value);
-        if (it != actions.end())
+        if (not this->value == value)
         {
-            it->second();
+            action();
         }
     }
 
@@ -35,14 +34,14 @@ struct watch
         return value;
     }
 
-    auto when_changed_to(Value value, action_type action) -> void
+    auto when_changed(action_type action) -> void
     {
-        actions[value] = action;
+        this->action = action;
     }
 
 private:
     Value value;
-    std::map<Value, action_type> actions;
+    action_type action;
 };
 
 } // namespace unpure
