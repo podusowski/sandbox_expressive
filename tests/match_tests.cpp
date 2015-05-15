@@ -17,22 +17,18 @@ TEST(match_tests, simple_match_by_value)
 
     auto i = 1;
 
-    EXPECT_CALL(expected, call());
-    functional::match(i,
-                      1, [&] { expected.call(); });
+    EXPECT_EQ(1, functional::match(i,
+                                   1, []{ return 1; }));
 
     EXPECT_CALL(expected, call());
     functional::match(i,
-                      1, [&] { expected.call(); },
-                      2, [&] { unexpected.call(); });
+                      1, [&]{ expected.call(); },
+                      2, [&]{ unexpected.call(); });
 
     EXPECT_CALL(expected, call());
     functional::match(i,
-                      2, [&] { unexpected.call(); },
-                      1, [&] { expected.call(); });
-
-    functional::match(i,
-                      2, [&] { unexpected.call(); });
+                      2, [&]{ unexpected.call(); },
+                      1, [&]{ expected.call(); });
 }
 
 TEST(match_tests, match_by_predicate)
@@ -47,13 +43,24 @@ TEST(match_tests, match_by_predicate)
 
     EXPECT_CALL(expected, call());
     functional::match(2,
-                      is_even, [&] { expected.call(); });
-
-    functional::match(1,
-                      is_even, [&] { unexpected.call(); });
+                      is_even, [&]{ expected.call(); });
 
     EXPECT_CALL(expected, call());
     functional::match(2,
-                      2      , [&] { expected.call(); },
-                      is_even, [&] { unexpected.call(); });
+                      2      , [&]{ expected.call(); },
+                      is_even, [&]{ unexpected.call(); });
+}
+
+TEST(match_tests, throw_if_not_matched)
+{
+    EXPECT_THROW(functional::match(2,
+                                   1, []{}), functional::bad_match);
+
+    auto is_even = [] (int i) -> bool
+    {
+        return i % 2 == 0;;
+    };
+
+    EXPECT_THROW(functional::match(1,
+                                   is_even, []{}), functional::bad_match);
 }
