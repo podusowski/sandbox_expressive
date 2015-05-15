@@ -1,60 +1,46 @@
 #pragma once
 
 #include <iostream>
+#include <functional>
+
+#include "curry.hpp"
 
 namespace functional
 {
 
 template<class value_type>
-struct matcher
+auto condition_met(const value_type & value, const value_type & equal_to) -> bool
 {
-    matcher() = delete;
-    matcher(const matcher<value_type> &) = default;
-    matcher(matcher<value_type> &&) = default;
+    return value == equal_to;
+}
 
-    explicit matcher(const value_type & value, bool active) : value(value), active(active)
-    {
-    }
-
-    template<class action_type>
-    auto operator () (const value_type & value, action_type action) -> matcher
-    {
-        std::cout << "value match\n";
-        if (active and this->value == value)
-        {
-            action();
-            return matcher{value, false};
-        }
-        else
-        {
-            return *this;
-        }
-    }
-
-    template<class predicate_type, class action_type>
-    auto operator () (predicate_type predicate, action_type action) -> matcher
-    {
-        std::cout << "pred match\n";
-        if (active and predicate(this->value))
-        {
-            action();
-            return matcher{value, false};
-        }
-        else
-        {
-            return *this;
-        }
-    }
-
-private:
-    const value_type & value;
-    bool active;
-};
+template<class value_type, class predicate_type>
+auto condition_met(const value_type & value, predicate_type predicate) -> bool
+{
+    return predicate(value);
+}
 
 template<class value_type>
-auto match(const value_type & value) -> matcher<value_type>
+auto match(const value_type &) -> void
 {
-    return matcher<value_type>{value, true};
+}
+
+template<class value_type,
+         class value_or_preficate_type,
+         class action_type,
+         class... other_types>
+auto match(const value_type & value,
+           value_or_preficate_type match_with, action_type action,
+           other_types... others) -> void
+{
+    if (condition_met(value, match_with))
+    {
+        action();
+    }
+    else
+    {
+        match(value, others...);
+    }
 }
 
 } // namespace functional
