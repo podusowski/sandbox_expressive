@@ -1,5 +1,1 @@
 configuration __default  compiler_flags(-std=c++1y -g -Wall -pedantic -O0)
-target application example sources(example.cpp)  run_after("${__build}/example")
-target application composition_example sources(composition_example.cpp) run_after("valgrind ${__build}/composition_example")
-target application watch_example sources(watch_example.cpp) run_after("${__build}/watch_example")
-target application match_example sources(match_example.cpp) run_after("${__build}/match_example")
