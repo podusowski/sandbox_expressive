@@ -1,6 +1,6 @@
 append $include_dirs $expressive.__path
 
-target application example sources(example.cpp) run_after("${__build}/example") include_dirs($include_dirs)
+target application simple_function_composition sources(simple_function_composition.cpp) run_after("${__build}/example") include_dirs($include_dirs)
 target application composition_example sources(composition_example.cpp) run_after("valgrind ${__build}/composition_example") include_dirs($include_dirs)
 target application watch_example sources(watch_example.cpp) run_after("${__build}/watch_example") include_dirs($include_dirs)
 target application match_example sources(match_example.cpp) run_after("${__build}/match_example") include_dirs($include_dirs)
