@@ -1,6 +1,6 @@
-Some functional toys.
+Some expressive c++ toys.
 
-[Function composition](example.cpp)
-Function currying
-Member fetch function
-Match - switch / if substitution which behaves like expression
+* [Function composition](example.cpp)
+* Function currying
+* Member fetch function
+* Match - switch / if substitution which behaves like expression
