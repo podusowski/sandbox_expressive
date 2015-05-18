@@ -7,19 +7,20 @@
 #include "functional/composition.hpp"
 #include "functional/curry.hpp"
 #include "functional/member.hpp"
+#include "functional/method.hpp"
 
 struct my_struct
 {
     int x;
 };
 
-//struct validator
-//{
-//    auto is_valid(int) const -> bool
-//    {
-//        return true;
-//    }
-//};
+struct validator
+{
+    auto get_y_out_of_x(int x) const -> int
+    {
+        return x + 10;
+    }
+};
 
 auto ints_are_equal(int a, int b) -> bool
 {
@@ -34,21 +35,28 @@ auto expressive_style(const std::vector<my_struct> & vec) -> bool
 {
     using namespace functional;
 
-    const auto x_is_equal_to_2 = compose(member(&my_struct::x),
-                                         curry(ints_are_equal, 2));
+    const auto val = validator{};
 
-    return std::find_if(vec.begin(), vec.end(), x_is_equal_to_2) != vec.end();
+    const auto y_equal_to_12 = compose(compose(member(&my_struct::x), method(val, &validator::get_y_out_of_x)),
+                                       curry(ints_are_equal, 12));
+
+
+    //const auto y_equal_to_12 = member(&my_struct::x) | method(val, &validator::get_y_out_of_x) | curry(ints_are_equal, 12);
+
+    return std::find_if(vec.begin(), vec.end(), y_equal_to_12) != vec.end();
 }
 
 auto bind_style(const std::vector<my_struct> & vec) -> bool
 {
     using namespace std::placeholders;
 
-    const auto x_is_equal_to_2 = std::bind(ints_are_equal,
-                                           std::bind(&my_struct::x, _1),
-                                           2);
+    const auto val = validator{};
 
-    return std::find_if(vec.begin(), vec.end(), x_is_equal_to_2) != vec.end();
+    const auto y_equal_to_12 = std::bind(ints_are_equal,
+                                        std::bind(&validator::get_y_out_of_x, &val, std::bind(&my_struct::x, _1)),
+                                        12);
+
+    return std::find_if(vec.begin(), vec.end(), y_equal_to_12) != vec.end();
 }
 
 int main()
