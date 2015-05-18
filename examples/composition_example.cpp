@@ -14,7 +14,7 @@ struct my_struct
     int x;
 };
 
-struct validator
+struct converting_object
 {
     auto get_y_out_of_x(int x) const -> int
     {
@@ -35,13 +35,15 @@ auto expressive_style(const std::vector<my_struct> & vec) -> bool
 {
     using namespace functional;
 
-    const auto val = validator{};
+    const auto conv = converting_object{};
 
-    const auto y_equal_to_12 = compose(compose(member(&my_struct::x), method(val, &validator::get_y_out_of_x)),
+    const auto y_equal_to_12 = compose(compose(member(&my_struct::x),
+                                               method(conv, &converting_object::get_y_out_of_x)),
                                        curry(ints_are_equal, 12));
 
 
-    //const auto y_equal_to_12 = member(&my_struct::x) | method(val, &validator::get_y_out_of_x) | curry(ints_are_equal, 12);
+    // desired :)
+    //const auto y_equal_to_12 = member(&my_struct::x) | method(conv, &converting_object::get_y_out_of_x) | curry(ints_are_equal, 12);
 
     return std::find_if(vec.begin(), vec.end(), y_equal_to_12) != vec.end();
 }
@@ -50,10 +52,10 @@ auto bind_style(const std::vector<my_struct> & vec) -> bool
 {
     using namespace std::placeholders;
 
-    const auto val = validator{};
+    const auto conv = converting_object{};
 
     const auto y_equal_to_12 = std::bind(ints_are_equal,
-                                        std::bind(&validator::get_y_out_of_x, &val, std::bind(&my_struct::x, _1)),
+                                        std::bind(&converting_object::get_y_out_of_x, &conv, std::bind(&my_struct::x, _1)),
                                         12);
 
     return std::find_if(vec.begin(), vec.end(), y_equal_to_12) != vec.end();
