@@ -9,13 +9,9 @@ namespace unpure
 template<class Value>
 struct watch
 {
-    using action_type = std::function<void()>;
+    using action_type = std::function<void(Value, Value)>;
 
-    watch() : value{}
-    {
-    }
-
-    explicit watch(Value value) : value(value)
+    explicit watch(action_type action, Value initial = Value{}) : action(action), value(initial)
     {
     }
 
@@ -25,7 +21,7 @@ struct watch
 
         if (not this->value == value)
         {
-            action();
+            action(value, this->value);
         }
     }
 
@@ -34,14 +30,9 @@ struct watch
         return value;
     }
 
-    auto when_changed(action_type action) -> void
-    {
-        this->action = action;
-    }
-
 private:
-    Value value;
     action_type action;
+    Value value;
 };
 
 } // namespace unpure
