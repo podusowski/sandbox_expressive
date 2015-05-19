@@ -37,15 +37,20 @@ auto expressive_style(const std::vector<my_struct> & vec) -> bool
 
     const auto conv = converting_object{};
 
-    const auto y_equal_to_12 = compose(compose(member(&my_struct::x),
-                                               method(conv, &converting_object::get_y_out_of_x)),
-                                       curry(ints_are_equal, 12));
+//    const auto predicate = compose(compose(member(&my_struct::x),
+//                                               method(conv, &converting_object::get_y_out_of_x)),
+//                                       curry(ints_are_equal, 12));
 
+    const auto take_x = member(&my_struct::x);
+    const auto convert_x_to_y = method(conv, &converting_object::get_y_out_of_x);
+    const auto is_equal_to_12 = curry(ints_are_equal, 12);
 
-    // desired :)
-    //const auto y_equal_to_12 = member(&my_struct::x) | method(conv, &converting_object::get_y_out_of_x) | curry(ints_are_equal, 12);
+    const auto predicate = compose(take_x, convert_x_to_y, is_equal_to_12);
 
-    return std::find_if(vec.begin(), vec.end(), y_equal_to_12) != vec.end();
+    // desired (is it worth it?)
+    //const auto predicate = take_x | convert_x_to_y | is_equal_to_12
+
+    return std::find_if(vec.begin(), vec.end(), predicate) != vec.end();
 }
 
 auto bind_style(const std::vector<my_struct> & vec) -> bool
@@ -54,11 +59,11 @@ auto bind_style(const std::vector<my_struct> & vec) -> bool
 
     const auto conv = converting_object{};
 
-    const auto y_equal_to_12 = std::bind(ints_are_equal,
-                                        std::bind(&converting_object::get_y_out_of_x, &conv, std::bind(&my_struct::x, _1)),
-                                        12);
+    const auto predicate = std::bind(ints_are_equal,
+                                     std::bind(&converting_object::get_y_out_of_x, &conv, std::bind(&my_struct::x, _1)),
+                                     12);
 
-    return std::find_if(vec.begin(), vec.end(), y_equal_to_12) != vec.end();
+    return std::find_if(vec.begin(), vec.end(), predicate) != vec.end();
 }
 
 int main()
