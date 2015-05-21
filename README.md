@@ -9,4 +9,4 @@ Some expressive c++ toys.
 ## More utilities
 * unpure::match - switch / if substitution which behaves like expression
 * [`strong_type`](examples/strong_type_example.cpp) - strong typing for primitives
-* `factory` - make_shared wrapper
+* `factory` - `make_shared` wrapper
