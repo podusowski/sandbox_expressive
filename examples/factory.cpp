@@ -11,29 +11,25 @@ struct interface
 
 struct concrete : public interface
 {
-    concrete(std::string name, std::string from) : name(name), from(from)
-    {
-    }
-
-    concrete(std::string name)
+    concrete(int number, std::string name) : number(number), name(name)
     {
     }
 
     auto say_hello() -> void override
     {
-        std::cout << "hello " << name << " from " << from << ", says struct!" << std::endl;
+        std::cout << "hello " << name << ", your number is " << number << ", says struct!" << std::endl;
     }
 
 private:
+    int number;
     std::string name;
-    std::string from;
 };
 
-using interface_factory = expressive::factory<interface>;
+using interface_factory = expressive::factory<interface, int>;
 
 void foo(interface_factory & factory)
 {
-    auto object = factory.create();
+    auto object = factory.create(1);
 
     assert(object);
     object->say_hello();
@@ -42,6 +38,5 @@ void foo(interface_factory & factory)
 int main()
 {
     using namespace std::placeholders;
-    auto factory = interface_factory::bind<concrete>(std::string("Piotr"));
-    foo(factory);
+    auto factory = interface_factory::bind<concrete, int, std::string>(_1, "Piotr");
 }

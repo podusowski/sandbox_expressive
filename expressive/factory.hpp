@@ -8,10 +8,10 @@ namespace detail
 {
 
 // need such version for std::bind -> std::function
-template<class Class, class... Args>
-auto make_shared_with_copied_args(Args... args) -> std::shared_ptr<Class>
+template<class Base, class Concrete, class... Args>
+auto make_shared_with_copied_args(Args... args) -> std::shared_ptr<Base>
 {
-    return std::make_shared<Class>(args...);
+    return std::make_shared<Concrete>(args...);
 }
 
 } // namespace detail
@@ -22,18 +22,15 @@ struct factory
     using pointer = std::shared_ptr<Base>;
     using impl_type = std::function<pointer(Args...)>;
 
-    // FIXME: forward
     auto create(Args... args) -> pointer
     {
         return impl(args...);
     }
 
-    // FIXME: forward
-    template<class Concrete, class... BindedArgs>
+    template<class Concrete, class... ConcreteArgs, class... BindedArgs>
     static auto bind(BindedArgs... binded_args) -> factory<Base, Args...>
     {
-        impl_type impl = std::bind(std::static_pointer_cast<Base, Concrete>,
-                                   std::bind(detail::make_shared_with_copied_args<Concrete, BindedArgs...>, binded_args...));
+        impl_type impl = std::bind(detail::make_shared_with_copied_args<Base, Concrete, ConcreteArgs...>, binded_args...);
 
         return factory<Base, Args...>{impl};
     }
