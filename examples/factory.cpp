@@ -11,10 +11,22 @@ struct interface
 
 struct concrete : public interface
 {
+    concrete(std::string name, std::string from) : name(name), from(from)
+    {
+    }
+
+    concrete(std::string name)
+    {
+    }
+
     auto say_hello() -> void override
     {
-        std::cout << "hello from concrete struct!" << std::endl;
+        std::cout << "hello " << name << " from " << from << ", says struct!" << std::endl;
     }
+
+private:
+    std::string name;
+    std::string from;
 };
 
 using interface_factory = expressive::factory<interface>;
@@ -29,6 +41,7 @@ void foo(interface_factory & factory)
 
 int main()
 {
-    auto factory = interface_factory::bind<concrete>();
+    using namespace std::placeholders;
+    auto factory = interface_factory::bind<concrete>(std::string("Piotr"));
     foo(factory);
 }
