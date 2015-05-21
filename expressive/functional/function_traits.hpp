@@ -8,30 +8,22 @@ struct function_traits : public function_traits<decltype(&Signature::operator())
 {
 };
 
-// two parameter specializations
-
-template<class Result, class Class, class Arg, class Second>
-struct function_traits<Result(Class::*)(Arg, Second) const>
+template<class Result, class Class>
+struct function_traits<Result(Class::*)() const>
 {
     typedef Result return_type;
-    typedef Arg arg_type;
-    typedef Second second_arg_type;
 };
 
-template<class Result, class Class, class Arg, class Second>
-struct function_traits<Result(Class::*)(Arg, Second)>
+template<class Result, class Class>
+struct function_traits<Result(Class::*)()>
 {
     typedef Result return_type;
-    typedef Arg arg_type;
-    typedef Second second_arg_type;
 };
 
-template<class Result, class Arg, class Second>
-struct function_traits<Result(*)(Arg, Second)>
+template<class Result>
+struct function_traits<Result(*)()>
 {
     typedef Result return_type;
-    typedef Arg arg_type;
-    typedef Second second_arg_type;
 };
 
 // one or N parameters
