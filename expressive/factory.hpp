@@ -30,6 +30,8 @@ struct factory
     template<class Concrete, class... ConcreteArgs, class... BindedArgs>
     static auto bind(BindedArgs... binded_args) -> factory<Base, Args...>
     {
+        static_assert(sizeof...(ConcreteArgs) == sizeof...(BindedArgs), "you have to provide constructor arguments");
+
         impl_type impl = std::bind(detail::make_shared_with_copied_args<Base, Concrete, ConcreteArgs...>, binded_args...);
 
         return factory<Base, Args...>{impl};
