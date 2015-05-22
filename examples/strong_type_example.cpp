@@ -1,11 +1,10 @@
-#include "unpure/strong_type.hpp"
+#include "strong_type.hpp"
 
 #include <type_traits>
 #include <iostream>
 
 struct player_id_tag {};
 struct ship_id_tag {};
-
 
 int main()
 {
