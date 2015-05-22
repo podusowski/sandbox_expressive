@@ -9,7 +9,7 @@ int main()
         std::cout << "changed from " << std::boolalpha << old_value << " to " << new_value << std::endl;
     };
 
-    unpure::watch<bool> value{print_old_and_new_value, false};
+    expressive::watch<bool> value{print_old_and_new_value, false};
 
     value = true;
     value = true;

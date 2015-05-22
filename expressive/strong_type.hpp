@@ -3,7 +3,7 @@
 #include <ostream>
 #include <typeinfo>
 
-namespace unpure
+namespace expressive
 {
 
 template<class Tag, class Underlaying>
@@ -45,4 +45,4 @@ std::ostream & operator << (std::ostream & os, strong_type<Tag, Underlaying> val
     return os << typeid(Tag).name() << ":" << val.get();
 }
 
-} // namespace unpure
+} // namespace expressive

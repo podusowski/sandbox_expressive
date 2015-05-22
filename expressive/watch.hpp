@@ -3,7 +3,7 @@
 #include <functional>
 #include <map>
 
-namespace unpure
+namespace expressive
 {
 
 template<class Value>
@@ -35,4 +35,4 @@ private:
     Value value;
 };
 
-} // namespace unpure
+} // namespace expressive
