@@ -1,6 +1,6 @@
-Some expressive c++ toys.
+Some `expressive` c++ toys.
 
-## Expressive bind primitives
+## Functional primitives
 
 You can do pretty much everything with `std::bind` but this library tends to name things in more comprehensive way. Check out [this example](examples/advanced_function_composition.cpp) to see how to do the same thing in `std::bind` and `expressive` way.
 
@@ -12,4 +12,4 @@ You can do pretty much everything with `std::bind` but this library tends to nam
 ## More utilities
 * `match` - switch / if substitution which behaves like expression and can take predicates
 * [`strong_type`](examples/strong_type_example.cpp) - strong typing for primitives
-* `factory` - `make_shared` wrapper
+* `factory` - `std::make_shared` wrapper
