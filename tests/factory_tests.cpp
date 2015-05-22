@@ -1,7 +1,10 @@
 #include "factory.hpp"
+#include "factory_mock.hpp"
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
+
+using namespace testing;
 
 struct base { virtual ~base() {} };
 struct derived : public base {};
@@ -51,4 +54,12 @@ TEST(factory_tests, one_arg_is_binded_while_the_second_one_is_provided_in_create
 
     EXPECT_TRUE(bool(object));
     expect_typed_object_to_be_filled(*object);
+}
+
+TEST(factory_tests, factory_mock_is_usable)
+{
+    factory_mock<base, int, int> factory;
+
+    EXPECT_CALL(factory, create(1, 2)).WillOnce(Return(std::shared_ptr<base>{}));
+    factory.create(1, 2);
 }

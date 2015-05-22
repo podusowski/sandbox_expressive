@@ -1,3 +1,5 @@
+#pragma once
+
 #include <memory>
 #include <functional>
 
@@ -22,7 +24,11 @@ struct factory
     using pointer = std::shared_ptr<Base>;
     using impl_type = std::function<pointer(Args...)>;
 
-    auto create(Args... args) -> pointer
+    factory()
+    {
+    }
+
+    virtual auto create(Args... args) -> pointer
     {
         return impl(args...);
     }
