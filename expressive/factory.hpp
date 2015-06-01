@@ -6,7 +6,7 @@
 namespace expressive
 {
 
-namespace detail
+namespace factory_details
 {
 
 // need such version for std::bind -> std::function
@@ -16,7 +16,7 @@ auto make_shared_with_copied_args(Args... args) -> std::shared_ptr<Base>
     return std::make_shared<Concrete>(args...);
 }
 
-} // namespace detail
+} // namespace factory_details
 
 template<class Base, class... Args>
 struct factory
@@ -39,7 +39,7 @@ struct factory
         // when some abstract factory is binded to some class, a constructor declaration have to be provided
         static_assert(sizeof...(ConcreteArgs) == sizeof...(BindedArgs), "you have to provide constructor arguments");
 
-        impl_type impl = std::bind(detail::make_shared_with_copied_args<Base, Concrete, ConcreteArgs...>, binded_args...);
+        impl_type impl = std::bind(factory_details::make_shared_with_copied_args<Base, Concrete, ConcreteArgs...>, binded_args...);
 
         return factory<Base, Args...>{impl};
     }

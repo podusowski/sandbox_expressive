@@ -7,6 +7,9 @@
 namespace functional
 {
 
+namespace curry_details
+{
+
 template<class Callable, class Arg, class... Others>
 struct curried
 {
@@ -61,11 +64,12 @@ struct curry_traits<Result(*)(Arg, Rest...)>
     };
 };
 
+} // namespace curry_details
 
 template<class Callable, class Arg>
 auto curry(Callable callable, Arg arg)
 {
-    return typename curry_traits<Callable>::template curried_callable<Callable>::type{callable, arg};
+    return typename curry_details::curry_traits<Callable>::template curried_callable<Callable>::type{callable, arg};
 }
 
 } // namespace functional
