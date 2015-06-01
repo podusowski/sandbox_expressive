@@ -13,3 +13,4 @@ You can do pretty much everything with `std::bind` but this library tends to nam
 * `match` - switch / if substitution which behaves like expression and can take predicates
 * [`strong_type`](examples/strong_type_example.cpp) - strong typing for primitives
 * `factory` - `std::make_shared` wrapper
+* `enumerate` - iterate over container with index
