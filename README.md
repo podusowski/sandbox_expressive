@@ -14,3 +14,4 @@ You can do pretty much everything with `std::bind` but this library tends to nam
 * [`strong_type`](examples/strong_type_example.cpp) - strong typing for primitives
 * `factory` - `std::make_shared` wrapper
 * `enumerate` - iterate over container with index
+* `container_cast` - eg `auto set = container_cast<std::set<int>>(vector_of_ints)`

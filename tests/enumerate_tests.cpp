@@ -2,6 +2,7 @@
 #include <gmock/gmock.h>
 
 #include "expressive/enumerate.hpp"
+#include "expressive/container_cast.hpp"
 
 struct loop_action_mock
 {
@@ -45,4 +46,14 @@ TEST(enumerate_tests, immutable_vector_can_be_enumerated)
 {
     const std::vector<int> numbers{1, 2, 3};
     expect_vector_to_be_enumerated<const std::vector<int> &>(numbers);
+}
+
+TEST(enumerate_tests, can_be_converted_to_map)
+{
+    const auto number_names = std::vector<std::string>{"zero", "one", "two"};
+
+    using int_to_name = std::map<int, std::string>;
+    const int_to_name names = expressive::container_cast<std::map<int, std::string>>(expressive::enumerate(number_names));
+
+    EXPECT_EQ((int_to_name{{0, "zero"}, {1, "one"}, {2, "two"}}), names);
 }
