@@ -76,4 +76,10 @@ auto enumerate(container_type & container)
     return enumerating_range<typename container_type::iterator>{container.begin(), container.end()};
 }
 
+template<class container_type>
+auto enumerate(const container_type & container)
+{
+    return enumerating_range<typename container_type::const_iterator>{container.begin(), container.end()};
+}
+
 } // namespace expressive
