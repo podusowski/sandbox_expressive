@@ -8,6 +8,7 @@
 #include "functional/curry.hpp"
 #include "functional/member.hpp"
 #include "functional/method.hpp"
+#include "functional/dereference.hpp"
 
 struct my_struct
 {
@@ -36,15 +37,10 @@ auto ints_are_equal(int a, int b) -> bool
     return a == b;
 }
 
-template<class pointer_like>
-auto dereference(pointer_like value)
-{
-    return *value;
-}
-
 auto expressive_style(const std::vector<std::shared_ptr<my_struct>> & vec) -> bool
 {
     using namespace functional;
+    using namespace expressive;
 
     const auto conv = converting_object{};
 
