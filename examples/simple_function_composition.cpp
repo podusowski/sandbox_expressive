@@ -3,33 +3,26 @@
 #include <iostream>
 #include <functional>
 
-#include "functional/composition.hpp"
-#include "functional/curry.hpp"
+#include "expressive/functional/composition.hpp"
+#include "expressive/functional/curry.hpp"
+#include "expressive/strong_type.hpp"
 
-template<int tag>
-struct strict_type
+struct one;
+struct two;
+struct three;
+
+using type1 = expressive::strong_int<one>;
+using type2 = expressive::strong_int<two>;
+using type3 = expressive::strong_int<three>;
+
+auto foo(type1 value) -> type2
 {
-    explicit strict_type(int value) : value(value)
-    {
-    }
-
-    auto operator * () const -> int
-    {
-        return value;
-    }
-
-private:
-    int value;
-};
-
-auto foo(strict_type<1> value) -> strict_type<2>
-{
-    return strict_type<2>{*value};
+    return type2{*value};
 }
 
-auto bar(strict_type<2> value) -> strict_type<3>
+auto bar(type2 value) -> type3
 {
-    return strict_type<3>{*value};
+    return type3{*value};
 }
 
 // usage
@@ -40,7 +33,7 @@ auto functional_way()
 
     auto foobar = compose(foo, bar);
 
-    /* to ensure return type */ strict_type<3> ret = foobar(strict_type<1>{3});
+    /* to ensure return type */ type3 ret = foobar(type1{3});
 
     assert(3 == *ret);
 }
@@ -51,7 +44,7 @@ auto std_bind_way()
 
     auto foobar = std::bind(bar, std::bind(foo, _1));
 
-    /* to ensure return type */ strict_type<3> ret = foobar(strict_type<1>{3});
+    /* to ensure return type */ type3 ret = foobar(type1{3});
 
     assert(3 == *ret);
 }

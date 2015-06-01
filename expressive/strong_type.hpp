@@ -29,6 +29,11 @@ struct strong_type
         return value;
     }
 
+    auto operator * () const -> Underlaying
+    {
+        return value;
+    }
+
 private:
     Underlaying value;
 };
