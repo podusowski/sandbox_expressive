@@ -29,6 +29,18 @@ TEST(enumerate_tests, mutable_vector_can_be_enumerated)
     expect_vector_to_be_enumerated<std::vector<int> &>(numbers);
 }
 
+TEST(enumerate_tests, value_elem_dont_mutate_elements)
+{
+    // this is also a std::map behavior
+
+    std::vector<int> numbers{1};
+
+    for (auto elem : expressive::enumerate(numbers))
+        elem.first = 2;
+
+    EXPECT_EQ(1, numbers[0]);
+}
+
 TEST(enumerate_tests, immutable_vector_can_be_enumerated)
 {
     const std::vector<int> numbers{1, 2, 3};
