@@ -55,14 +55,13 @@ struct enumerating_range
 
     auto begin()
     {
-        return enumerating_iterator<iterator_type>{underlaying_begin,
-                                                   0};
+        return enumerating_iterator<iterator_type>{underlaying_begin, 0};
     }
 
     auto end()
     {
-        return enumerating_iterator<iterator_type>{underlaying_end,
-                                                   static_cast<size_t>(std::distance(underlaying_begin, underlaying_end))};
+        const auto index = static_cast<size_t>(std::distance(underlaying_begin, underlaying_end));
+        return enumerating_iterator<iterator_type>{underlaying_end, index};
     }
 
 private:
