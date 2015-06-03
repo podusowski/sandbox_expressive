@@ -4,7 +4,6 @@
 #include <functional>
 
 #include "expressive/functional/composition.hpp"
-#include "expressive/functional/curry.hpp"
 #include "expressive/strong_type.hpp"
 
 struct one;
