@@ -42,6 +42,5 @@ int main()
     auto factory = interface_factory::bind<concrete, int, std::string>(_1, "Piotr");
     //auto factory = interface_factory::bind<concrete(int, std::string)>(_1, "Piotr");
 
-    auto obj = factory.create(1);
-    obj->say_hello();
+    foo(factory);
 }
