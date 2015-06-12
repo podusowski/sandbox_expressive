@@ -28,7 +28,7 @@ struct factory
     {
     }
 
-    virtual auto create(Args... args) -> pointer
+    virtual auto create(Args... args) const -> pointer
     {
         return impl(args...);
     }

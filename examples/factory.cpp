@@ -28,7 +28,7 @@ private:
 using interface_factory = expressive::factory<interface, int>;
 //using interface_factory_function_style = expressive::factory<interface(int)>;
 
-void foo(interface_factory & factory)
+void foo(const interface_factory & factory)
 {
     auto object = factory.create(1);
 
