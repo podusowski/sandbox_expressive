@@ -26,7 +26,7 @@ private:
 };
 
 using interface_factory = expressive::factory<interface, int>;
-//using interface_factory = expressive::factory<interface(int)>;
+//using interface_factory_function_style = expressive::factory<interface(int)>;
 
 void foo(interface_factory & factory)
 {
@@ -41,4 +41,7 @@ int main()
     using namespace std::placeholders;
     auto factory = interface_factory::bind<concrete, int, std::string>(_1, "Piotr");
     //auto factory = interface_factory::bind<concrete(int, std::string)>(_1, "Piotr");
+
+    auto obj = factory.create(1);
+    obj->say_hello();
 }
