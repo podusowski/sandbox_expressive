@@ -56,7 +56,15 @@ TEST(factory_tests, one_arg_is_binded_while_the_second_one_is_provided_in_create
     expect_typed_object_to_be_filled(*object);
 }
 
-TEST(factory_tests, factory_mock_is_usable)
+TEST(factory_tests, factory_mock_with_one_arg_is_usable)
+{
+    factory_mock<base, int> factory;
+
+    EXPECT_CALL(factory, create(2)).WillOnce(Return(std::shared_ptr<base>{}));
+    factory.create(2);
+}
+
+TEST(factory_tests, factory_mock_with_two_args_is_usable)
 {
     factory_mock<base, int, int> factory;
 
