@@ -53,7 +53,7 @@ TEST(enumerate_tests, can_be_converted_to_map)
     const auto number_names = std::vector<std::string>{"zero", "one", "two"};
 
     using int_to_name = std::map<int, std::string>;
-    const int_to_name names = expressive::container_cast<std::map<int, std::string>>(expressive::enumerate(number_names));
+    const auto names = expressive::container_cast<int_to_name>(expressive::enumerate(number_names));
 
     EXPECT_EQ((int_to_name{{0, "zero"}, {1, "one"}, {2, "two"}}), names);
 }
