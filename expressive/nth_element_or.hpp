@@ -1,23 +1,28 @@
 #pragma once
 
+#include <tuple>
+
 namespace expressive
 {
 
-template<unsigned Index, class First, class... Rest>
-struct nth_element_or : public nth_element_or<Index - 1, Rest...>
+template<bool in_range, unsigned index, class Alternative, class... Elements>
+struct nth_element_or_impl;
+
+template<unsigned index, class Alternative, class... Elements>
+struct nth_element_or_impl<true, index, Alternative, Elements...>
 {
+    using type = typename std::tuple_element<index, std::tuple<Elements...>>::type;
 };
 
-template<class First, class... Rest>
-struct nth_element_or<0>
+template<unsigned index, class Alternative, class... Elements>
+struct nth_element_or_impl<false, index, Alternative, Elements...>
 {
-    using type = First;
+    using type = Alternative;
 };
 
-template<>
-struct nth_element_or<0>
+template<unsigned index, class Alternative, class... Elements>
+struct nth_element_or : public nth_element_or_impl<index < sizeof...(Elements), index, Alternative, Elements...>
 {
-    using type = int;
 };
 
 } // namespace expressive
