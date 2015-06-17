@@ -7,3 +7,4 @@ target application match_example sources(match_example.cpp) run_after("${__build
 target application strong_type_example sources(strong_type_example.cpp) run_after("${__build}/strong_type_example") include_dirs($include_dirs)
 target application factory_example sources(factory.cpp) run_after("${__build}/factory_example") include_dirs($include_dirs)
 target application enumerate sources(enumerate.cpp) run_after("valgrind ${__build}/enumerate") include_dirs($include_dirs)
+target application nth_element_or sources(nth_element_or.cpp) run_after("valgrind ${__build}/nth_element_or") include_dirs($include_dirs)
