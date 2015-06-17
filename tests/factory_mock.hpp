@@ -3,7 +3,7 @@
 #include <gmock/gmock.h>
 
 #include "factory.hpp"
-#include "expressive/nth_element_or.hpp"
+#include "expressive/meta/nth_element_or.hpp"
 
 namespace expressive
 {
