@@ -37,31 +37,19 @@ struct curry_traits : public curry_traits<decltype(&Callable::operator())>
 template<class Result, class Class, class Arg, class... Rest>
 struct curry_traits<Result(Class::*)(Arg, Rest...) const>
 {
-    template<class Callable>
-    struct curried_callable
-    {
-        using type = curried<Callable, Arg, Rest...>;
-    };
+    using type = curried<Result(Class::*)(Arg, Rest...) const, Arg, Rest...>;
 };
 
 template<class Result, class Class, class Arg, class... Rest>
 struct curry_traits<Result(Class::*)(Arg, Rest...)>
 {
-    template<class Callable>
-    struct curried_callable
-    {
-        using type = curried<Callable, Arg, Rest...>;
-    };
+    using type = curried<Result(Class::*)(Arg, Rest...), Arg, Rest...>;
 };
 
 template<class Result, class Arg, class... Rest>
 struct curry_traits<Result(*)(Arg, Rest...)>
 {
-    template<class Callable>
-    struct curried_callable
-    {
-        using type = curried<Callable, Arg, Rest...>;
-    };
+    using type = curried<Result(*)(Arg, Rest...), Arg, Rest...>;
 };
 
 } // namespace curry_details
@@ -69,7 +57,7 @@ struct curry_traits<Result(*)(Arg, Rest...)>
 template<class Callable, class Arg>
 auto curry(Callable callable, Arg arg)
 {
-    return typename curry_details::curry_traits<Callable>::template curried_callable<Callable>::type{callable, arg};
+    return typename curry_details::curry_traits<Callable>::type{callable, arg};
 }
 
 } // namespace functional
