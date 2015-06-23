@@ -15,6 +15,7 @@ You can do pretty much everything with `std::bind` but this library tends to nam
 * [`factory`](examples/factory.cpp) - `std::make_shared` wrapper with usable [`mock`](tests/factory_mock.hpp)
 * [`enumerate`](examples/enumerate.cpp) - iterate over container with index
 * `container_cast` - eg `auto set = container_cast<std::set<int>>(vector_of_ints)`
+* [`watch`](examples/watch.cpp) - "smart" variable which does something when its value really changes
 
 ## Metaprogramming utilities
 * `nth_element_or` - gives nth element of template argument pack or other type if index is out of range
