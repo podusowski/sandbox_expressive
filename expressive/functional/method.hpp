@@ -1,5 +1,7 @@
 #pragma once
 
+namespace expressive
+{
 namespace functional
 {
 
@@ -30,3 +32,4 @@ auto method(Struct & object, Method p) -> method_wrapper<Method>
 }
 
 } // namespace functional
+} // namespace expressive

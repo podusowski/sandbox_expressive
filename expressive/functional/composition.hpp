@@ -1,7 +1,9 @@
 #pragma once
 
-#include "function_traits.hpp"
+#include "meta/function_traits.hpp"
 
+namespace expressive
+{
 namespace functional
 {
 
@@ -41,3 +43,4 @@ auto compose(First first, Second second, Rest... rest)
 }
 
 } // namespace functional
+} // namespace expressive

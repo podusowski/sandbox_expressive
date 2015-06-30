@@ -1,6 +1,6 @@
 #pragma once
 
-namespace functional
+namespace expressive
 {
 
 template<class Signature>
@@ -49,4 +49,4 @@ struct function_traits<Result(*)(Arg, Rest...)>
     typedef Arg arg_type;
 };
 
-} // namespace functional
+} // namespace expressive

@@ -1,9 +1,11 @@
 #pragma once
 
-#include "function_traits.hpp"
+#include "meta/function_traits.hpp"
 
 #include <type_traits>
 
+namespace expressive
+{
 namespace functional
 {
 
@@ -61,3 +63,4 @@ auto curry(Callable callable, Arg arg)
 }
 
 } // namespace functional
+} // namespace expressive

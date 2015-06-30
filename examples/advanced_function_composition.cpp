@@ -39,8 +39,7 @@ auto ints_are_equal(int a, int b) -> bool
 
 auto expressive_style(const std::vector<std::shared_ptr<my_struct>> & vec) -> bool
 {
-    using namespace functional;
-    using namespace expressive;
+    using namespace expressive::functional;
 
     const auto conv = converting_object{};
 

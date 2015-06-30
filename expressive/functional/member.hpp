@@ -1,5 +1,7 @@
 #pragma once
 
+namespace expressive
+{
 namespace functional
 {
 
@@ -26,3 +28,4 @@ auto member(Member Struct::* member) -> member_callable<Struct, Member>
 }
 
 } // namespace functional
+} // namespace expressive

@@ -28,7 +28,7 @@ auto bar(type2 value) -> type3
 
 auto functional_way()
 {
-    using namespace functional;
+    using namespace expressive::functional;
 
     auto foobar = compose(foo, bar);
 
