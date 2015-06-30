@@ -26,7 +26,7 @@ struct else_mock
 
 using else_strict_mock = testing::StrictMock<else_mock>;
 
-TEST(element_tests, action_called_when_element_is_found_on_const_map)
+TEST(element_tests, action_called_when_element_is_found)
 {
     action_strict_mock<std::string> action;
 
