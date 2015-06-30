@@ -11,7 +11,7 @@ You can do pretty much everything with `std::bind` but this library tends to nam
 
 ## Container utilities
 * [`enumerate`](examples/enumerate.cpp) - iterate over container with index
-* [`map_element`](examples/map_element.cpp) - do something on map's element by typing map's name once
+* [`element`](examples/element.cpp) - do something on map's element by typing map's name once
 * `container_cast` - eg `auto set = container_cast<std::set<int>>(vector_of_ints)`
 
 ## More
