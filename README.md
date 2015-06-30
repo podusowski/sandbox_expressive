@@ -9,12 +9,15 @@ You can do pretty much everything with `std::bind` but this library tends to nam
 * `functional::member` - member fetch function - `member(&some_struct::some_member) -> f(some_struct) -> decltype(some_struct::some_member)`
 * `functional::method` - method bind, but without need for placeholders
 
-## More utilities
+## Container utilities
+* `container_cast` - eg `auto set = container_cast<std::set<int>>(vector_of_ints)`
+* [`map_element`](examples/map_element.cpp) - do something on map's element by typing map's name once
+
+## More
 * `match` - switch / if substitution which behaves like expression and can take predicates
 * [`strong_type`](examples/strong_type_example.cpp) - strong typing for primitives
 * [`factory`](examples/factory.cpp) - `std::make_shared` wrapper with usable [`mock`](tests/factory_mock.hpp)
 * [`enumerate`](examples/enumerate.cpp) - iterate over container with index
-* `container_cast` - eg `auto set = container_cast<std::set<int>>(vector_of_ints)`
 * [`watch`](examples/watch.cpp) - "smart" variable which does something when its value really changes
 
 ## Metaprogramming utilities
