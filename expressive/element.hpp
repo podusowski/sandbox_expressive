@@ -11,6 +11,11 @@ auto element(const Map & map, typename Map::key_type key, Action action)
     if (it != map.end())
     {
         action(it->second);
+        return true;
+    }
+    else
+    {
+        return false;
     }
 }
 
@@ -22,10 +27,12 @@ auto element(const Map & map, typename Map::key_type key, Action action, Else el
     if (it != map.end())
     {
         action(it->second);
+        return true;
     }
     else
     {
         els();
+        return false;
     }
 }
 
