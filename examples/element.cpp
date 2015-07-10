@@ -8,6 +8,15 @@ auto make_map()
     return std::map<int, std::string>{{1, "one"}, {2, "two"}};
 }
 
+auto just_check()
+{
+    const auto map = make_map();
+
+    const auto found = expressive::element(map, 1);
+
+    std::cout << "exists: " << std::boolalpha << found << std::endl;
+}
+
 auto element_exists()
 {
     const auto map = make_map();
