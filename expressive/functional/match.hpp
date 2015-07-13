@@ -13,14 +13,14 @@ struct bad_match : public std::runtime_error
 };
 
 template<class value_type>
-auto check(const value_type & value, const value_type & equal_to) -> bool
+auto check(const value_type & value, const value_type & equal_to)
 {
     return value == equal_to;
 }
 
 template<class value_type,
          class predicate_type>
-auto check(const value_type & value, predicate_type predicate) -> bool
+auto check(const value_type & value, predicate_type predicate)
 {
     return predicate(value);
 }
@@ -57,7 +57,7 @@ template<class value_type,
          class... other_types>
 auto match(const value_type & value,
            value_or_preficate_type match_with, action_type action,
-           other_types... others) -> decltype(action())
+           other_types... others)
 {
     return match_impl<decltype(action())>(value, match_with, action, others...);
 }
