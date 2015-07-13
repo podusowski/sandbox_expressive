@@ -13,14 +13,14 @@ struct bad_match : public std::runtime_error
 };
 
 template<class value_type>
-auto check(const value_type & value, const value_type & equal_to)
+auto check(const value_type & value, const value_type & equal_to) -> bool
 {
     return value == equal_to;
 }
 
 template<class value_type,
          class predicate_type>
-auto check(const value_type & value, predicate_type predicate)
+auto check(const value_type & value, predicate_type predicate) -> bool
 {
     return predicate(value);
 }
@@ -39,7 +39,7 @@ template<class return_type,
          class... other_types>
 auto match_impl(const value_type & value,
                 value_or_preficate_type match_with, action_type action,
-                other_types... others)
+                other_types... others) -> return_type
 {
     if (check(value, match_with))
     {
