@@ -1,5 +1,7 @@
 #pragma once
 
+#include "expressive/meta/call_with_one_arg_or_none.hpp"
+
 #include <stdexcept>
 
 namespace functional
@@ -43,7 +45,7 @@ auto match_impl(const value_type & value,
 {
     if (check(value, match_with))
     {
-        return action();
+        return expressive::call_with_one_arg_or_none(action, value);
     }
     else
     {
@@ -59,7 +61,8 @@ auto match(const value_type & value,
            value_or_preficate_type match_with, action_type action,
            other_types... others)
 {
-    return match_impl<decltype(action())>(value, match_with, action, others...);
+    using return_type = decltype(expressive::call_with_one_arg_or_none(action, value));
+    return match_impl<return_type>(value, match_with, action, others...);
 }
 
 struct otherwise_t
