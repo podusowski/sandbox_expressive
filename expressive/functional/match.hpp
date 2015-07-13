@@ -39,7 +39,7 @@ template<class return_type,
          class... other_types>
 auto match_impl(const value_type & value,
                 value_or_preficate_type match_with, action_type action,
-                other_types... others) -> return_type
+                other_types... others)
 {
     if (check(value, match_with))
     {
