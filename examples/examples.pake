@@ -10,3 +10,4 @@ target application factory_example sources(factory.cpp) run_after("${__build}/fa
 target application enumerate sources(enumerate.cpp) run_after("valgrind ${__build}/enumerate") include_dirs($include_dirs)
 target application nth_element_or sources(nth_element_or.cpp) include_dirs($include_dirs) # just static_asserts
 target application element sources(element.cpp) include_dirs($include_dirs) run_after("${__build}/element")
+target application unified_container sources(unified_container.cpp) include_dirs($include_dirs) run_after("${__build}/unified_container")
