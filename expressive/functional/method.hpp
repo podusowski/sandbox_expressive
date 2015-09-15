@@ -8,13 +8,13 @@ namespace functional
 namespace method_details
 {
 
-template<class Pointer, class T>
-struct method_wrapper;
+template<class, class>
+struct callable;
 
 template<class Pointer, class Result, class Class, class... Args>
-struct method_wrapper<Pointer, Result (Class::*)(Args...) const>
+struct callable<Pointer, Result (Class::*)(Args...) const>
 {
-    method_wrapper(Pointer object, Result (Class::* method)(Args...) const) : object(object), method(method)
+    callable(Pointer object, Result (Class::* method)(Args...) const) : object(object), method(method)
     {
     }
 
@@ -29,9 +29,9 @@ private:
 };
 
 template<class Pointer, class Result, class Class, class... Args>
-struct method_wrapper<Pointer, Result (Class::*)(Args...)>
+struct callable<Pointer, Result (Class::*)(Args...)>
 {
-    method_wrapper(Pointer object, Result (Class::* method)(Args...)) : object(object), method(method)
+    callable(Pointer object, Result (Class::* method)(Args...)) : object(object), method(method)
     {
     }
 
@@ -47,10 +47,14 @@ private:
 
 } // namespace method_details
 
+/**
+ * Value passed through object argument is stored as-is in resulting callable,
+ * this means that you can put for example std::shared_ptr and it will be stored.
+ */
 template<class Pointer, class Method>
-auto method(Pointer object, Method p) -> method_details::method_wrapper<Pointer, Method>
+auto method(Pointer object, Method p)
 {
-    return method_details::method_wrapper<Pointer, Method>{object, p};
+    return method_details::callable<Pointer, Method>{object, p};
 }
 
 } // namespace functional
