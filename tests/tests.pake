@@ -1,5 +1,5 @@
 append $include_dirs $expressive.__path $expressive.include_dirs $gtest.__path
 
 target application tests \
-    sources(match_tests.cpp factory_tests.cpp enumerate_tests.cpp element_tests.cpp) \
+    sources(match_tests.cpp factory_tests.cpp enumerate_tests.cpp element_tests.cpp method_tests.cpp) \
     run_after("${__build}/tests") include_dirs($include_dirs) depends_on(gtest) link_with(gtest pthread)
