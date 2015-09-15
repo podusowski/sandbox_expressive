@@ -34,7 +34,7 @@ TEST(method_tests, method_from_const_object_passed_by_sp_is_called)
     const auto object = std::make_shared<object_with_const_method_mock>();
 
     {
-        auto method = expressive::functional::method(object, &object_with_const_method_mock::foo);
+        const auto method = expressive::functional::method(object, &object_with_const_method_mock::foo);
 
         EXPECT_FALSE(object.unique());
 
@@ -45,16 +45,16 @@ TEST(method_tests, method_from_const_object_passed_by_sp_is_called)
     EXPECT_TRUE(object.unique());
 }
 
-//struct object_with_method_mock
-//{
-//    MOCK_METHOD1(foo, int(int));
-//};
-//
-//TEST(method_tests, method_from_object_is_called)
-//{
-//    object_with_method_mock object;
-//    auto method = expressive::functional::method(object, &object_with_method_mock::foo);
-//
-//    EXPECT_CALL(object, foo(argument)).WillOnce(Return(result));
-//    EXPECT_EQ(result, method(argument));
-//}
+struct object_with_method_mock
+{
+    MOCK_METHOD1(foo, int(int));
+};
+
+TEST(method_tests, method_from_object_passed_by_raw_pointer_is_called)
+{
+    object_with_method_mock object;
+    auto method = expressive::functional::method(&object, &object_with_method_mock::foo);
+
+    EXPECT_CALL(object, foo(argument)).WillOnce(Return(result));
+    EXPECT_EQ(result, method(argument));
+}
