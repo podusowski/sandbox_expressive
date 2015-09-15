@@ -3,6 +3,9 @@
 #include <type_traits>
 #include <iostream>
 
+namespace expressive
+{
+
 template<class Container>
 auto insert(Container & p_container, const typename Container::value_type & p_value) -> decltype(p_container.push_back(p_value))
 {
@@ -14,6 +17,8 @@ auto insert(Container & p_container, const typename Container::value_type & p_va
 {
     return p_container.insert(p_value);
 }
+
+} // namespace expressive
 
 template<class Container>
 auto print(const Container & p_container)
@@ -28,8 +33,8 @@ auto main() -> int
 {
     std::vector<int> v;
     std::set<int> s;
-    insert(v, 1);
-    insert(s, 1);
+    expressive::insert(v, 1);
+    expressive::insert(s, 1);
 
     print(v);
     print(s);
