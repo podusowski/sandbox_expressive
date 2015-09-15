@@ -1,24 +1,9 @@
+#include "expressive/container.hpp"
+
 #include <vector>
 #include <set>
-#include <type_traits>
 #include <iostream>
-
-namespace expressive
-{
-
-template<class Container>
-auto insert(Container & p_container, const typename Container::value_type & p_value) -> decltype(p_container.push_back(p_value))
-{
-    return p_container.push_back(p_value);
-}
-
-template<class Container>
-auto insert(Container & p_container, const typename Container::value_type & p_value) -> decltype(p_container.insert(p_value))
-{
-    return p_container.insert(p_value);
-}
-
-} // namespace expressive
+#include <cassert>
 
 template<class Container>
 auto print(const Container & p_container)
@@ -35,6 +20,12 @@ auto main() -> int
     std::set<int> s;
     expressive::insert(v, 1);
     expressive::insert(s, 1);
+
+    assert(expressive::exists(v, 1));
+    assert(not expressive::exists(v, 2));
+
+    assert(expressive::exists(s, 1));
+    assert(not expressive::exists(s, 2));
 
     print(v);
     print(s);
