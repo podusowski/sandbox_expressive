@@ -6,7 +6,7 @@ namespace functional
 {
 
 template<class pointer_like>
-auto dereference(pointer_like value)
+auto dereference(pointer_like value) -> decltype(*value)
 {
     return *value;
 }
