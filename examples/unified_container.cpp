@@ -6,21 +6,15 @@
 #include <iostream>
 #include <cassert>
 
-template<class Container>
-auto print(const Container & p_container)
-{
-    for (const auto & e : p_container)
-    {
-        std::cout << e << " ";
-    }
-}
-
 auto main() -> int
 {
     std::vector<int> v;
     std::set<int> s;
+
     expressive::insert(v, 1);
+
     expressive::insert(s, 1);
+    expressive::insert(s, 3);
 
     assert(expressive::exists(v, 1));
     assert(not expressive::exists(v, 2));
@@ -28,7 +22,6 @@ auto main() -> int
     assert(expressive::exists(s, 1));
     assert(not expressive::exists(s, 2));
 
-    std::cout << expressive::printable(v);
-    print(v);
-    print(s);
+    std::cout << "vector: " << expressive::printable(v) << std::endl;
+    std::cout << "set: " << expressive::printable(s) << std::endl;
 }
