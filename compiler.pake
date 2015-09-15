@@ -1,1 +1,1 @@
-configuration __default  compiler_flags(-std=c++1y -g -Wall -pedantic -O0)
+configuration __default  compiler_flags(-std=c++14 -g -Wall -pedantic -O0)
