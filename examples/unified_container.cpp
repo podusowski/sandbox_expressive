@@ -1,4 +1,5 @@
 #include "expressive/container.hpp"
+#include "expressive/container/printable.hpp"
 
 #include <vector>
 #include <set>
@@ -27,6 +28,7 @@ auto main() -> int
     assert(expressive::exists(s, 1));
     assert(not expressive::exists(s, 2));
 
+    std::cout << expressive::printable(v);
     print(v);
     print(s);
 }
