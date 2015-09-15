@@ -13,6 +13,8 @@ You can do pretty much everything with `std::bind` but this library tends to nam
 * [`enumerate`](examples/enumerate.cpp) - iterate over container with index
 * [`element`](examples/element.cpp) - do something on map's element by typing map's name once
 * `container_cast` - eg `auto set = container_cast<std::set<int>>(vector_of_ints)`
+* [`insert`](examples/unified_container.cpp) - common `insert` for all std containers
+* [`exists`](examples/unified_container.cpp) - common `exists` for all std containers
 
 ## More
 * `match` - switch / if substitution which behaves like expression and can take predicates
