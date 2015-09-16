@@ -3,6 +3,8 @@
 #include <memory>
 #include <tuple>
 
+#include <gmock/gmock.h>
+
 namespace expressive
 {
 
@@ -15,6 +17,18 @@ struct mocks
         return nth<0, type>();
     }
 
+    template<class type>
+    auto second()
+    {
+        return nth<1, type>();
+    }
+
+    template<class type>
+    auto third()
+    {
+        return nth<2, type>();
+    }
+
 private:
     template<int n, class type>
     auto nth()
@@ -23,13 +37,13 @@ private:
 
         if (not mock)
         {
-            mock = std::make_shared<type>();
+            mock = std::make_shared<testing::StrictMock<type>>();
         }
 
-        return mock;
+        return std::dynamic_pointer_cast<testing::StrictMock<type>>(mock);
     }
 
-    std::array<std::tuple<std::shared_ptr<types>...>, 2> mocks;
+    std::array<std::tuple<std::shared_ptr<types>...>, 3> mocks;
 };
 
 } // namespace expressive
