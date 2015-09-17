@@ -9,5 +9,5 @@ auto main() -> int
     auto b = false;
     auto v = std::vector<int>{1, 2, 3};
 
-    std::cout << make_string(i, b);
+    std::cout << make_string("int: ", i, "bool: ", b, "collection: ", v);
 }
