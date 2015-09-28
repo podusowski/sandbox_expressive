@@ -46,4 +46,27 @@ private:
     std::array<std::tuple<std::shared_ptr<types>...>, 3> mocks;
 };
 
+template<class object, class... dependencies>
+struct object_with_dependencies_test_suite : public testing::Test
+{
+    object_with_dependencies_test_suite() : obj(deps.template first<dependencies>()...)
+    {
+    }
+
+    object & sut()
+    {
+        return obj;
+    }
+
+    template<class type>
+    auto mock()
+    {
+        return deps.template first<type>();
+    }
+
+private:
+    mocks<dependencies...> deps;
+    object obj;
+};
+
 } // namespace expressive
