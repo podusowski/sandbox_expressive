@@ -1,11 +1,8 @@
 #include "expressive/make_string.hpp"
 #include "expressive/fn.hpp"
 
-#include <cassert>
 #include <ostream>
 #include <iostream>
-#include <functional>
-#include <type_traits>
 #include <typeinfo>
 #include <cxxabi.h>
 
