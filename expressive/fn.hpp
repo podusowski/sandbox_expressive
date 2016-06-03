@@ -30,6 +30,18 @@ struct stored_t<F, void>
     }
 };
 
+template<class F, class... Args>
+auto callable_with_impl(int, F f, Args... args) -> decltype(f(args...), std::true_type{});
+
+template<class F, class... Args>
+auto callable_with_impl(float, F f, Args... args) -> std::false_type;
+
+template<class F, class... Args>
+auto callable_with(F f, Args... args)
+{
+    return decltype(callable_with_impl(int{}, f, args...)){};
+}
+
 template<class Funtion>
 struct fn_t
 {
