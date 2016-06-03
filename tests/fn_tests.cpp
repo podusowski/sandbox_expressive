@@ -50,6 +50,9 @@ TEST(fn_tests, three_params)
                       };
 
     EXPECT_EQ(25, f(100, 50, 2));
+    EXPECT_EQ(25, f(100, 50)(2));
+    EXPECT_EQ(25, f(100)(50, 2));
+    EXPECT_EQ(25, f(100)(50)(2));
 }
 
 namespace
