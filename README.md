@@ -8,6 +8,7 @@ You can do pretty much everything with `std::bind` but this library tends to nam
 * `functional::curry` - partial application
 * `functional::member` - member fetch function - `member(&some_struct::some_member) -> f(some_struct) -> decltype(some_struct::some_member)`
 * `functional::method` - method bind, but without need for placeholders
+* `fn` - uberfunction, see [tests](tests/fn.cpp)
 
 ## Container utilities
 * [`enumerate`](examples/enumerate.cpp) - iterate over container with index
