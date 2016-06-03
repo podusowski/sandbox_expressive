@@ -93,7 +93,7 @@ constexpr auto _ = _t{};
 auto main() -> int
 {
     {
-        const auto f = curry [](auto i)
+        const auto f = curry [](int i)
                              {
                                  return i + 1;
                              };
