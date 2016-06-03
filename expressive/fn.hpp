@@ -48,13 +48,13 @@ struct fn_t
     const Funtion _function;
 
     template<class... Args>
-    auto call(int, Args... args) const -> decltype(_function(args...))
+    auto call(std::true_type /* callable */, Args... args) const
     {
         return _function(args...);
     }
 
     template<class... Args>
-    auto call(float, Args... args) const
+    auto call(std::false_type /* callable */, Args... args) const
     {
         return store(_function, args...);
     }
@@ -87,9 +87,9 @@ struct fn_t
     }
 
     template<class... Args>
-    auto operator () (Args... args) const -> decltype(call(int{}, args...))
+    auto operator () (Args... args) const
     {
-        return call(int{}, args...);
+        return call(callable_with(_function, args...), args...);
     }
 };
 
