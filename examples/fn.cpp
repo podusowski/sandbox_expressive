@@ -21,10 +21,10 @@ struct stored_t
     const F _function;
     const StoredArg _arg;
 
-    template<class Arg>
-    auto operator() (Arg arg) const -> decltype(_function(_arg, arg))
+    template<class... Args>
+    auto operator() (Args... args) const -> decltype(_function(_arg, args...))
     {
-        return _function(_arg, arg);
+        return _function(_arg, args...);
     }
 };
 
@@ -33,17 +33,17 @@ struct stored_t<F, void>
 {
     const F _function;
 
-    template<class Arg>
-    auto operator() (Arg arg) const -> decltype(_function(arg))
+    template<class... Args>
+    auto operator() (Args... args) const -> decltype(_function(args...))
     {
-        return _function(arg);
+        return _function(args...);
     }
 };
 
-template<class F>
+template<class Funtion>
 struct fn_t
 {
-    const F _function;
+    const Funtion _function;
 
     template<class... Args>
     auto call(int, Args... args) const -> decltype(_function(args...))
@@ -51,12 +51,23 @@ struct fn_t
         return _function(args...);
     }
 
-    template<class Arg>
-    auto call(float, Arg arg) const
+    template<class... Args>
+    auto call(float, Args... args) const
+    {
+        return store(_function, args...);
+    }
+
+    template<class F, class Arg>
+    auto store(F f, Arg arg) const
     {
         using Stored = stored_t<F, Arg>;
+        return fn_t<Stored>{Stored{f, arg}};
+    }
 
-        return fn_t<Stored>{Stored{_function, arg}};
+    template<class F, class Arg, class... Args>
+    auto store(F f, Arg arg, Args... args) const
+    {
+        return store(store(f, arg), args...);
     }
 
     template<class... Args>
@@ -98,9 +109,7 @@ auto main() -> int
                                  return i + 1;
                              };
 
-        const auto i = f(1);
-
-        std::cout << "(int)(1): " << i << std::endl;
+        std::cout << "(int)(1): " << f(1) << std::endl;
         std::cout << std::endl;
     }
 
@@ -113,5 +122,21 @@ auto main() -> int
         std::cout << "(int, int)(1): " << f(1) << std::endl;
         std::cout << "(int, int)(1)(1): " << f(1)(1) << std::endl;
         std::cout << "(int, int)(1, 1): " << f(1, 1) << std::endl;
+        std::cout << std::endl;
+    }
+
+    {
+        const auto f = curry [](int i, int j, int k)
+                             {
+                                 return (i - j) / k;
+                             };
+
+        std::cout << "(int, int, int)(100): "        << f(100) << std::endl;
+        std::cout << "(int, int, int)(100)(10): "    << f(100)(10) << std::endl;
+        std::cout << "(int, int, int)(100)(10)(2): " << f(100)(10)(2) << std::endl;
+        std::cout << "(int, int, int)(100)(10, 2): " << f(100)(10, 2) << std::endl;
+        std::cout << "(int, int, int)(100, 10, 2): " << f(100, 10, 2) << std::endl;
+        std::cout << "(int, int, int)(100, 10)(2): " << f(100, 10)(2) << std::endl;
+        std::cout << std::endl;
     }
 }
