@@ -18,8 +18,8 @@ auto demangle()
 template<class F, class StoredArg>
 struct stored_t
 {
-    F _function;
-    StoredArg _arg;
+    const F _function;
+    const StoredArg _arg;
 
     template<class Arg>
     auto operator() (Arg arg) const -> decltype(_function(_arg, arg))
@@ -31,7 +31,7 @@ struct stored_t
 template<class F>
 struct stored_t<F, void>
 {
-    F _function;
+    const F _function;
 
     template<class Arg>
     auto operator() (Arg arg) const -> decltype(_function(arg))
@@ -43,7 +43,7 @@ struct stored_t<F, void>
 template<class F>
 struct fn_t
 {
-    F _function;
+    const F _function;
 
     template<class Arg>
     auto call(int, Arg arg) const -> decltype(_function(arg))
@@ -54,9 +54,9 @@ struct fn_t
     template<class Arg>
     auto call(float, Arg arg) const
     {
-        using Stored = stored_t<decltype(*this), Arg>;
+        using Stored = stored_t<F, Arg>;
 
-        return fn_t<Stored>{Stored{*this, arg}};
+        return fn_t<Stored>{Stored{_function, arg}};
     }
 
     template<class... Args>
@@ -112,7 +112,6 @@ auto main() -> int
 
         std::cout << "(int, int)(1): " << f(1) << std::endl;
         std::cout << "(int, int)(1)(1): " << f(1)(1) << std::endl;
-
-//        assert(i == 2);
+//        std::cout << "(int, int)(1, 1): " << f(1, 1) << std::endl;
     }
 }
