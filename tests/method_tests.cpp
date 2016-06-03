@@ -22,7 +22,7 @@ struct object_with_const_method_mock
 
 TEST(method_tests, method_from_const_object_passed_by_raw_pointer_is_called)
 {
-    const object_with_const_method_mock object;
+    const object_with_const_method_mock object{};
     auto method = expressive::functional::method(&object, &object_with_const_method_mock::foo);
 
     EXPECT_CALL(object, foo(argument)).WillOnce(Return(result));
