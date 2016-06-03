@@ -142,8 +142,11 @@ auto main() -> int
         std::cout << "(int, int)(1): " << f(1) << std::endl;
         std::cout << "(int, int)(1)(1): " << f(1)(1) << std::endl;
         std::cout << "(int, int)(1, 1): " << f(1, 1) << std::endl;
+        std::cout << std::endl;
 
         std::cout << "(int, int)(1, _1)(1): " << f(1, _1)(1) << std::endl;
+        std::cout << "(int, int)(_1, 1): "    << f(_1, 1) << std::endl;
+        std::cout << "(int, int)(_1, 1)(1): " << f(_1, 1)(1) << std::endl;
         std::cout << std::endl;
     }
 
@@ -160,7 +163,9 @@ auto main() -> int
         std::cout << "(int, int, int)(100)(10, 2): " << f(100)(10, 2) << std::endl;
         std::cout << "(int, int, int)(100, 10, 2): " << f(100, 10, 2) << std::endl;
         std::cout << "(int, int, int)(100, 10)(2): " << f(100, 10)(2) << std::endl;
+        std::cout << std::endl;
 
+        std::cout << "(int, int, int)(100, _1): "        << f(100, _1) << std::endl;
         std::cout << "(int, int, int)(100, _1)(2): "     << f(100, _1)(2) << std::endl;
         std::cout << "(int, int, int)(100, _1)(10)(2): " << f(100, _1)(10)(2) << std::endl; // 10 is applied as _1 !!!
         std::cout << "(int, int, int)(100, _1)(10, 2): " << f(100, _1)(2, 10) << std::endl;
