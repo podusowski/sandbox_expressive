@@ -45,10 +45,10 @@ struct fn_t
 {
     const F _function;
 
-    template<class Arg>
-    auto call(int, Arg arg) const -> decltype(_function(arg))
+    template<class... Args>
+    auto call(int, Args... args) const -> decltype(_function(args...))
     {
-        return _function(arg);
+        return _function(args...);
     }
 
     template<class Arg>
@@ -112,6 +112,6 @@ auto main() -> int
 
         std::cout << "(int, int)(1): " << f(1) << std::endl;
         std::cout << "(int, int)(1)(1): " << f(1)(1) << std::endl;
-//        std::cout << "(int, int)(1, 1): " << f(1, 1) << std::endl;
+        std::cout << "(int, int)(1, 1): " << f(1, 1) << std::endl;
     }
 }
