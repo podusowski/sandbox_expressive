@@ -12,3 +12,4 @@ target application nth_element_or sources(nth_element_or.cpp) include_dirs($incl
 target application element sources(element.cpp) include_dirs($include_dirs) run_after("${__build}/element")
 target application unified_container sources(unified_container.cpp) include_dirs($include_dirs) run_after("valgrind ${__build}/unified_container")
 target application make_string sources(make_string.cpp) include_dirs($include_dirs) run_after("valgrind ${__build}/make_string")
+target application fn sources(fn.cpp) include_dirs($include_dirs) run_after("valgrind ${__build}/fn")
