@@ -1,6 +1,7 @@
 #pragma once
 
 #include <sstream>
+#include <cxxabi.h>
 
 namespace make_string_detail
 {
@@ -52,4 +53,14 @@ auto make_string(T && p_param, U &&... p_params)
     make_string_detail::print_value_or_container(p_param, l_ss);
     make_string_detail::print_value_or_container(make_string(std::forward<U>(p_params)...), l_ss);
     return l_ss.str();
+}
+
+template<class T>
+auto demangle()
+{
+    int status;
+    char * realname = abi::__cxa_demangle(typeid(T).name(), 0, 0, &status);
+    auto ret = std::string(realname);
+    free(realname);
+    return ret;
 }

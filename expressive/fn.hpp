@@ -60,14 +60,14 @@ struct fn_t
     }
 
     template<class F, class Arg>
-    auto store_or_bind(std::true_type, F f, Arg arg) const
+    auto store_or_bind(std::true_type /* placeholder */, F f, Arg arg) const
     {
         using fn = fn_t<decltype(std::bind(f, arg))>;
         return fn{std::bind(f, arg)};
     }
 
     template<class F, class Arg>
-    auto store_or_bind(std::false_type, F f, Arg arg) const
+    auto store_or_bind(std::false_type /* placeholder */, F f, Arg arg) const
     {
         using Stored = stored_t<F, Arg>;
         return fn_t<Stored>{Stored{f, arg}};

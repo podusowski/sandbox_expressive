@@ -4,17 +4,6 @@
 #include <ostream>
 #include <iostream>
 #include <typeinfo>
-#include <cxxabi.h>
-
-template<class T>
-auto demangle()
-{
-    int status;
-    char * realname = abi::__cxa_demangle(typeid(T).name(), 0, 0, &status);
-    auto ret = std::string(realname);
-    free(realname);
-    return ret;
-}
 
 template<class F>
 std::ostream & operator << (std::ostream & os, expressive::fn_t<F> f)
