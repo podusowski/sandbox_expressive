@@ -103,7 +103,26 @@ TEST(fn_tests, bind_expression_can_be_called_with)
     EXPECT_TRUE(expressive::callable_with(b, 1, 2));
     EXPECT_TRUE(expressive::callable_with(b, 1, 2.0));
 
-    EXPECT_EQ(std::false_type{}, expressive::callable_with(b, 1));
-//    EXPECT_EQ(std::false_type{}, expressive::callable_with(b, 1, 2, 3));
-    EXPECT_EQ(std::false_type{}, expressive::callable_with(b, 1, "2"));
+    EXPECT_FALSE(expressive::callable_with(b, 1));
+    EXPECT_TRUE(expressive::callable_with(b, 1, 2, 3)); // bind expression is callable with more number of params!
+    EXPECT_FALSE(expressive::callable_with(b, 1, "2"));
 }
+
+TEST(fn_tests, composition)
+{
+    const auto a = fn [](auto i) { return i + 1; };
+    const auto s = fn [](auto i) { return make_string(i); };
+    const auto g = a >>= s;
+
+    EXPECT_EQ("2", g(1));
+}
+
+//TEST(fn_tests, fmap)
+//{
+//    const auto odd = fn [](auto i) { return i % 2 == 0; };
+//    const auto in = std::vector<int>{1, 2, 3};
+//
+//    const auto out = in >>= odd;
+//
+//    EXPECT_EQ((std::vector<bool>{false, true, false}), out);
+//}

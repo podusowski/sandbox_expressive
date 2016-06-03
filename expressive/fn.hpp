@@ -5,11 +5,11 @@
 namespace expressive
 {
 
-template<class F, class StoredArg>
+template<class F, class Arg>
 struct stored_t
 {
     const F _function;
-    const StoredArg _arg;
+    const Arg _arg;
 
     template<class... Args>
     auto operator() (Args... args) const -> decltype(_function(_arg, args...))
@@ -41,6 +41,19 @@ auto callable_with(F f, Args... args)
 {
     return decltype(callable_with_impl(int{}, f, args...)){};
 }
+
+template<class First, class Second>
+struct composition_t
+{
+    First _first;
+    Second _second;
+
+    template<class... Args>
+    auto operator () (Args... args) const
+    {
+        return _second(_first(args...));
+    }
+};
 
 template<class Funtion>
 struct fn_t
@@ -91,7 +104,18 @@ struct fn_t
     {
         return call(callable_with(_function, args...), args...);
     }
+
+    template<class F>
+    auto operator >>= (F f) const
+    {
+        return fn_t<composition_t<Funtion, F>>{{_function, f}};
+    }
 };
+
+//template<class C, class F>
+//auto operator >>= (C in, fn_t<F> f)
+//{
+//}
 
 template<class F>
 auto make_fn(F function)
