@@ -112,7 +112,7 @@ TEST(fn_tests, composition)
 {
     const auto a = fn [](auto i) { return i + 1; };
     const auto s = fn [](auto i) { return make_string(i); };
-    const auto g = a >>= s;
+    const auto g = a | s;
 
     EXPECT_EQ("2", g(1));
 }

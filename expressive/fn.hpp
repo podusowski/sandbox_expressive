@@ -106,7 +106,7 @@ struct fn_t
     }
 
     template<class F>
-    auto operator >>= (F f) const
+    auto operator | (F f) const
     {
         return fn_t<composition_t<Funtion, F>>{{_function, f}};
     }
@@ -132,8 +132,8 @@ struct fn_maker
     }
 };
 
-constexpr auto _make_fn = fn_maker{};
+constexpr auto fn = fn_maker{};
 
 } // expressive
 
-#define fn expressive::_make_fn %
+#define fn expressive::fn %
