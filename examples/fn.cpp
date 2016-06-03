@@ -63,8 +63,8 @@ struct fn_t
     template<class F, class Arg>
     auto store_or_bind(std::true_type, F f, Arg arg) const
     {
-        using make_fn = fn_t<decltype(std::bind(f, arg))>;
-        return make_fn{std::bind(f, arg)};
+        using fn = fn_t<decltype(std::bind(f, arg))>;
+        return fn{std::bind(f, arg)};
     }
 
     template<class F, class Arg>
